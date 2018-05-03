@@ -27,8 +27,13 @@ class Startiot:
         # make the socket non-blocking
         self.s.setblocking(blocking)
 
+    def convertbytes(self, data):
+        for i in range(0, len(data)):
+            self.bytesarraytemp[i] = data[i]
+        return self.bytesarraytemp
+
     def send(self, data):
-        self.s.send(data)
+        self.s.send(convertbytes(data))
 
     def recv(self, length):
         return self.s.recv(length)
