@@ -3,7 +3,7 @@ import time
 import binascii
 import socket
 from network import LoRa
-from machine import I2C
+from machine import UART
 from time import sleep
 from machine import Pin
 from onewire import DS18X20
@@ -11,6 +11,7 @@ from onewire import OneWire
 from deepsleep import DeepSleep
 
 #ds=DeepSleep()
+#pycom.heartbeat(False)
 class LoRaNetwork:
     def __init__(self):
 
@@ -55,9 +56,10 @@ if __name__ == '__main__':
     lora = LoRaNetwork()
     while(True):
         lora.senddata()
-
-#print('going to sleep')
-#ds.go_to_sleep(30)
-
-
-        #time.sleep(60)
+        time.sleep(10)
+        uart = UART(1, 9600)                         # init with given baudrate
+        uart.init(9600, bits=8, parity=None, stop=1) # init with given parameters
+        print('deep sleep started')
+        ds=DeepSleep()
+        ds.go_to_sleep(30)
+        print('deep sleep ended')
