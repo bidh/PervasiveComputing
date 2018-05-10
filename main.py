@@ -8,9 +8,12 @@ from time import sleep
 from machine import Pin
 from onewire import DS18X20
 from onewire import OneWire
+from deepsleep import DeepSleep
 
+#ds=DeepSleep()
 class LoRaNetwork:
     def __init__(self):
+
         global temp
 
         # Initialize LoRaWAN radio
@@ -26,7 +29,7 @@ class LoRaNetwork:
         # Loop until joined
         while not self.lora.has_joined():
             print('Not joined yet...')
-            time.sleep(2)
+
 
         print('Joined')
         self.s = socket.socket(socket.AF_LORA, socket.SOCK_RAW)
@@ -50,7 +53,11 @@ if __name__ == '__main__':
     temp = DS18X20(ow)
 
     lora = LoRaNetwork()
-
     while(True):
         lora.senddata()
-        time.sleep(60)
+
+#print('going to sleep')
+#ds.go_to_sleep(30)
+
+
+        #time.sleep(60)
