@@ -11,27 +11,20 @@ from onewire import OneWire
 from deepsleep import DeepSleep
 
 #ds=DeepSleep()
-#pycom.heartbeat(False)
+pycom.heartbeat(False)
 class LoRaNetwork:
     def __init__(self):
-
         global temp
-
         # Initialize LoRaWAN radio
         self.lora = LoRa(mode=LoRa.LORAWAN)
-
         # Set network keys
         app_eui = binascii.unhexlify('70B3D57ED000B952')
         app_key = binascii.unhexlify('5C1C7B199BB7438D27C254D59F6EBA00')
-
         # Join the network
         self.lora.join(activation=LoRa.OTAA, auth=(app_eui, app_key), timeout=0)
-
         # Loop until joined
         while not self.lora.has_joined():
             print('Not joined yet...')
-
-
         print('Joined')
         self.s = socket.socket(socket.AF_LORA, socket.SOCK_RAW)
         self.s.setsockopt(socket.SOL_LORA, socket.SO_DR, 5)
@@ -56,10 +49,8 @@ if __name__ == '__main__':
     lora = LoRaNetwork()
     while(True):
         lora.senddata()
-        time.sleep(10)
-        uart = UART(1, 9600)                         # init with given baudrate
-        uart.init(9600, bits=8, parity=None, stop=1) # init with given parameters
-        print('deep sleep started')
-        ds=DeepSleep()
-        ds.go_to_sleep(30)
-        print('deep sleep ended')
+        #time.sleep(60)
+        #print('deep sleep started')
+        #ds=DeepSleep()
+        #ds.go_to_sleep(30)
+        #print('deep sleep ended')
